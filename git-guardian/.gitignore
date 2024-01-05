@@ -19,3 +19,4 @@ Thumbs.db
 # Autres fichiers et dossiers à ignorer
 .env
 tmp/
+*.vsix

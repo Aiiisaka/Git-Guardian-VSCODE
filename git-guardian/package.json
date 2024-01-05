@@ -4,7 +4,7 @@
   "publisherID": "Aiiisaka",
   "displayName": "Git Guardian",
   "description": "\"Git Guardian\" is a Visual Studio Code extension designed to promote good version control practices with Git. It monitors the state of file modifications in a Git repository and alerts the user when predefined thresholds for modified or untracked files are exceeded. This tool aims to ensure timely commits and maintain repository health, making it easier for developers to manage their code changes effectively.",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "engines": {
     "vscode": "^1.85.0"
   },
