@@ -1,0 +1,21 @@
+# Fichiers de dépendances
+node_modules/
+
+# Dossier de build
+out/
+dist/
+
+# Fichiers de configuration de l'environnement de développement
+.vscode/
+*.code-workspace
+
+# Fichiers de configuration spécifiques au système
+*.DS_Store
+Thumbs.db
+
+# Fichiers de logs
+*.log
+
+# Autres fichiers et dossiers à ignorer
+.env
+tmp/

@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Variables d'environnement pour les seuils
+MAX_FILES_MODIFIED_OR_UNTRACKED=10
+MAX_LINES_MODIFIED=100
+
+# Fonction pour formater le message en fonction du nombre
+format_message() {
+    local count=$1
+    local singular=$2
+    local plural=$3
+
+    if [ "$count" -eq 1 ]; then
+        echo "$count $singular"
+    else
+        echo "$count $plural"
+    fi
+}
+
+# Fonction pour vérifier le statut des fichiers
+check_files() {
+    files_modified=$(git diff --name-only | wc -l)
+    lines_modified=$(git diff | grep "^+" | wc -l)
+    untracked_files=$(git ls-files -o | wc -l)
+    files_modified_or_untracked=$(($files_modified + $untracked_files))
+
+    if [ "$files_modified_or_untracked" -ge $MAX_FILES_MODIFIED_OR_UNTRACKED ] || [ "$lines_modified" -ge $MAX_LINES_MODIFIED ]; then
+        echo "ALERT"
+        return 1
+    else
+        echo "OK"
+    fi
+
+    return 0
+}
+
+# Vérification de l'installation de Git
+if ! command -v git &> /dev/null; then
+    echo "GIT_NOT_INSTALLED"
+    exit 1
+fi
+
+check_files
