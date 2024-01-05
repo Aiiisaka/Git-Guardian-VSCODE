@@ -23,8 +23,6 @@ export function activate(context: vscode.ExtensionContext) {
 				return;
 			}
 
-			vscode.window.showInformationMessage(stdout);
-
 			if (stdout.trim() === "ALERT") {
 				vscode.window.showWarningMessage("⚠️ Time to version your changes! Starting a 30-second countdown...");
 
