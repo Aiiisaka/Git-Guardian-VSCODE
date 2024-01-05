@@ -4,19 +4,6 @@
 MAX_FILES_MODIFIED_OR_UNTRACKED=10
 MAX_LINES_MODIFIED=100
 
-# Fonction pour formater le message en fonction du nombre
-format_message() {
-    local count=$1
-    local singular=$2
-    local plural=$3
-
-    if [ "$count" -eq 1 ]; then
-        echo "$count $singular"
-    else
-        echo "$count $plural"
-    fi
-}
-
 # Fonction pour vérifier le statut des fichiers
 check_files() {
     files_modified=$(git diff --name-only | wc -l)

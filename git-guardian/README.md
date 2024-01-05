@@ -10,7 +10,7 @@
 ## Usage
 1. Install the "Git Guardian" extension from the Visual Studio Code Marketplace.
 2. Open a project with a Git repository.
-3. Run the "Execute Git Guardian" command from the VS Code command palette.
+3. Wait or Run the "Execute Git Guardian" command from the VS Code command palette.
 4. Receive notifications if versioning actions are needed.
 
 ## Development

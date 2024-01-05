@@ -11,11 +11,19 @@ export function activate(context: vscode.ExtensionContext) {
 			command = `wsl bash ${wslPath}`;
 		}
 
-		exec(command, (err, stdout, stderr) => {
+		if (!vscode.workspace.workspaceFolders) {
+			vscode.window.showErrorMessage("Working folder not found, open a folder an try again.");
+			return;
+		}
+		let options = { cwd: vscode.workspace.workspaceFolders[0].uri.fsPath };
+
+		exec(command, options, (err, stdout, stderr) => {
 			if (err) {
 				vscode.window.showErrorMessage(`Error: ${err.message}`);
 				return;
 			}
+
+			vscode.window.showInformationMessage(stdout);
 
 			if (stdout.trim() === "ALERT") {
 				vscode.window.showWarningMessage("⚠️ Time to version your changes! Starting a 30-second countdown...");
@@ -26,7 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
 					counter--;
 					if (counter === 0) {
 						clearInterval(interval);
-						exec(`bash ${__dirname}/git-guardian.sh`, (err, stdout, stderr) => {
+						exec(command, options, (err, stdout, stderr) => {
 							if (stdout.trim() === "ALERT") {
 								vscode.window.showErrorMessage("Time's up! Auto-cleaning unversioned changes.");
 								exec('git reset --hard && git clean -fd');
@@ -48,9 +56,14 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const interval = setInterval(checkGitStatus, 30000);
 
+	let disposable = vscode.commands.registerCommand('gitguardian.run', () => {
+		checkGitStatus();
+	});
+
 	context.subscriptions.push({
 		dispose: () => {
 			clearInterval(interval);
 		}
 	});
+	context.subscriptions.push(disposable);
 }
