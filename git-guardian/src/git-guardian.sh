@@ -12,13 +12,10 @@ check_files() {
     files_modified_or_untracked=$(($files_modified + $untracked_files))
 
     if [ "$files_modified_or_untracked" -ge $MAX_FILES_MODIFIED_OR_UNTRACKED ] || [ "$lines_modified" -ge $MAX_LINES_MODIFIED ]; then
-        echo "ALERT"
-        return 1
-    else
-        echo "OK"
+        return "ALERT"
     fi
 
-    return 0
+    return "OK"
 }
 
 # Vérification de l'installation de Git
